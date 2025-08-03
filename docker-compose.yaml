@@ -30,29 +30,29 @@ services:
     ports:
       - 6379:6379
 
-  postgres:
-    container_name: postgres
-    image: postgres:17
-    networks:
-      - evolution-net
-    command: [
-      "postgres",
-      "-c", "max_connections=200",
-      "-c", "listen_addresses=*",
-      "-c", "shared_buffers=256MB",
-      "-c", "effective_cache_size=1GB",
-      "-c", "work_mem=4MB"
-    ]
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=evolution_db
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    volumes:
-    - postgres_data:/var/lib/postgresql/data
+  # postgres:
+  #   container_name: postgres
+  #   image: postgres:17
+  #   networks:
+  #     - evolution-net
+  #   command: [
+  #     "postgres",
+  #     "-c", "max_connections=200",
+  #     "-c", "listen_addresses=*",
+  #     "-c", "shared_buffers=256MB",
+  #     "-c", "effective_cache_size=1GB",
+  #     "-c", "work_mem=4MB"
+  #   ]
+  #   restart: always
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=pass
+  #     - POSTGRES_DB=evolution_db
+  #     - POSTGRES_HOST_AUTH_METHOD=trust
+  #   volumes:
+  #   - postgres_data:/var/lib/postgresql/data
 
   # pgbouncer:
   #   image: edoburu/pgbouncer:latest
