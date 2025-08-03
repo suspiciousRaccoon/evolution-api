@@ -6,7 +6,7 @@ services:
     restart: always
     depends_on:
       - redis
-      - postgres
+      # - postgres
     ports:
       - 8080:8080
     volumes:
@@ -74,7 +74,7 @@ services:
 volumes:
   evolution_instances:
   evolution_redis:
-  postgres_data:
+  # postgres_data:
 
 
 networks:
