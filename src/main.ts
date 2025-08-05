@@ -43,7 +43,9 @@ async function bootstrap() {
         if (ORIGIN.includes('*')) {
           return callback(null, true);
         }
-        if (ORIGIN.indexOf(requestOrigin) !== -1) {
+        const originHostname = requestOrigin ? new URL(requestOrigin).hostname : '';
+
+        if (ORIGIN.includes(originHostname)) {
           return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));
