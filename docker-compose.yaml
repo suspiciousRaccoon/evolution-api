@@ -17,6 +17,8 @@ services:
       - .env
     expose:
       - 8080
+    extra_hosts:
+      - host.docker.internal:5432:host.gateway
 
   redis:
     image: redis:latest
