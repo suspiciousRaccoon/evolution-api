@@ -6,9 +6,8 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 EnvironmentFile=/etc/conf.d/evolution-api/evolution-api.conf
-ExecStart=/bin/bash 'docker compose up -f ${EVO_API_DOCKER_COMPOSE_PATH} -d --remove-orphans'
-ExecStop=/bin/bash 'docker compose down -f ${EVO_API_DOCKER_COMPOSE_PATH}'
+ExecStart=/bin/bash -c "/usr/bin/docker compose -f ${EVO_API_DOCKER_COMPOSE_PATH} up -d --remove-orphans"
+ExecStop=/bin/bash -c "/usr/bin/docker compose -f ${EVO_API_DOCKER_COMPOSE_PATH} down"
 
 [Install]
 WantedBy=multi-user.target
-
