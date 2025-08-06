@@ -1,24 +1,6 @@
 services:
   
-  api:
-    container_name: evolution_api
-    build: .
-    restart: always
-    depends_on:
-      - redis
-      # - postgres
-    ports:
-      - 8080:8080
-    volumes:
-      - evolution_instances:/evolution/instances
-    networks:
-      - evolution-net
-    env_file:
-      - .env
-    expose:
-      - 8080
-    extra_hosts:
-      - host.docker.internal:host-gateway
+
 
   redis:
     image: redis:latest
@@ -32,30 +14,45 @@ services:
     ports:
       - 6379:6379
 
-  # postgres:
-  #   container_name: postgres
-  #   image: postgres:17
-  #   networks:
-  #     - evolution-net
-  #   command: [
-  #     "postgres",
-  #     "-c", "max_connections=200",
-  #     "-c", "listen_addresses=*",
-  #     "-c", "shared_buffers=256MB",
-  #     "-c", "effective_cache_size=1GB",
-  #     "-c", "work_mem=4MB"
-  #   ]
-  #   restart: always
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     - POSTGRES_USER=user
-  #     - POSTGRES_PASSWORD=pass
-  #     - POSTGRES_DB=evolution_db
-  #     - POSTGRES_HOST_AUTH_METHOD=trust
-  #   volumes:
-  #   - postgres_data:/var/lib/postgresql/data
+  postgres:
+    container_name: postgres
+    image: postgres:17
+    networks:
+      - evolution-net
+    command: [
+      "postgres",
+      "-c", "max_connections=200",
+      "-c", "listen_addresses=*",
+      "-c", "shared_buffers=256MB",
+      "-c", "effective_cache_size=1GB",
+      "-c", "work_mem=4MB"
+    ]
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
 
+  api:
+    container_name: evolution_api
+    build: .
+    restart: always
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - 8080:8080
+    volumes:
+      - evolution_instances:/evolution/instances
+    networks:
+      - evolution-net
+    env_file:
+      - .env
+    expose:
+      - 8080
+      
   # pgbouncer:
   #   image: edoburu/pgbouncer:latest
   #   environment:
@@ -76,7 +73,7 @@ services:
 volumes:
   evolution_instances:
   evolution_redis:
-  # postgres_data:
+  postgres_data:
 
 
 networks:
