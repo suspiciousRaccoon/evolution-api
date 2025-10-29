@@ -21,10 +21,12 @@ services:
 
   frontend:
     container_name: evolution_frontend
-    image: evoapicloud/evolution-manager:latest
+    build:
+      context: ./evolution-manager-v2
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:80"
+      - "3000:3000"
     networks:
       - evolution-net
 
