@@ -1,3 +1,4 @@
+import { configService, Telemetry } from '@config/env.config';
 import axios from 'axios';
 import fs from 'fs';
 
