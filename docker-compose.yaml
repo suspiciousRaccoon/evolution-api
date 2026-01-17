@@ -16,6 +16,8 @@ services:
       - evolution-net
     env_file:
       - .env
+    logging:
+      driver: journald
 
   frontend:
     container_name: evolution_frontend
